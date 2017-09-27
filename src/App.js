@@ -1,19 +1,38 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import LogPanel from './components/LogPanel';
+import InfosForm from './components/InfosForm';
 
 class App extends Component {
+  constructor() {
+    super();
+    this.state = {
+      token: null
+    }
+  }
+
+  setToken(token) {
+    token ? this.setState({token: token}) : this.setState({token: null})
+  }
+
   render() {
-    return (
-      <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
-        </div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+    const mainPanelContents = this.state.token ?
+    (
+      <div>
+        <LogPanel token={this.state.token} setToken={(token) => this.setToken(token)} />
+        <InfosForm />
       </div>
+    ) : 
+    (
+      <div>
+        <LogPanel token={this.state.token} setToken={(token) => this.setToken(token)} />
+      </div>
+    );
+
+    return (
+      <MuiThemeProvider>
+        {mainPanelContents}
+      </MuiThemeProvider>
     );
   }
 }

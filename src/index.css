@@ -3,3 +3,25 @@ body {
   padding: 0;
   font-family: sans-serif;
 }
+.login-form, .log-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.login-form, .infosForm {
+  padding: 20px;
+  margin-top: 20px;
+  border: 1px solid #d9d9d9;
+}
+.login-btn, .logout-btn {
+  width: 256px;
+  margin-top: 20px;
+}
+.infosForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.error-text {
+  color: #A70000;
+}

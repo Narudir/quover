@@ -1,0 +1,82 @@
+{
+    "partner": {
+        "productAgreementLabel": "xxxxfdgfdgfdg"
+    },
+    "language": "nl",
+    "partnerReference": [
+        {
+            "key": "salexId",
+            "value": "12345678"
+        }
+    ],
+    "risk": {
+        "vehicle": {
+            "identification": {
+                "code": "123470",
+                "codeType": "NAT",
+                "country": "BE",
+                "vehicleType": "10"
+            },
+            "firstRegistrationYear": "2017",
+            "invoice": {
+                "purchasedPriceWithVat": {
+                    "value": 4500000,
+                    "currency": "EUR"
+                },
+                "isPurchasedInLast6Month": true
+            }
+        },
+        "drivers": [
+            {
+                "person": {
+                    "title": "Mr.",
+                    "firstName": "John",
+                    "lastName": "Doe",
+                    "birthDate": "1974-10-10"
+                },
+                "contact": {
+                    "phone": "+32477007007",
+                    "email": "john.doe@qover.me"
+                },
+                "numberOfClaimsLast5Years": "0"
+            }
+        ]
+    },
+    "terms": {
+        "startDate": "2017-12-12",
+        "requestPaperCopy": false
+    },
+    "policyholder": {
+        "person": {
+            "title": "Mr.",
+            "firstName": "John",
+            "lastName": "Doe",
+            "birthDate": "1974-10-10"
+        },
+        "company": {
+            "name": "Qover SA",
+            "vat": "BE0870123456",
+            "title": "Mr.",
+            "firstName": "John",
+            "lastName": "Doe"
+        },
+        "contact": {
+            "phone": "+32477007007",
+            "email": "john.doe@qover.me"
+        },
+        "address": {
+            "number": "44",
+            "street": "Rue des palais",
+            "zip": "1000",
+            "city": "Bruxelles",
+            "country": "BE"
+        },
+        "billingAddress": {
+            "number": "44",
+            "street": "Rue des palais",
+            "zip": "1000",
+            "city": "Bruxelles",
+            "country": "BE"
+        }
+    }
+}
