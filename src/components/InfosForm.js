@@ -2,52 +2,88 @@ import React, { Component } from 'react';
 import TextField from 'material-ui/TextField';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
+import DatePicker from 'material-ui/DatePicker';
 import RaisedButton from 'material-ui/RaisedButton';
+import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
+import {sendDraft} from '../utils/qover-api';
+const draft =  require('../utils/draft.json')
 
 class InfosForm extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            driverName: "",
-            driverAge: 22,
+            title: "Mr",
+            firstName: "",
+            lastName: "",
+            birthDate: "1984-12-16",
             carModel: "114980",
             email: "",
-            driverErrorText: "",
+            firstNameError: "",
+            lastNameError: "",
             ageErrorText: "",
             emailErrorText: "",
         }
     }
 
     validate() {
-        this.state.driverName === "" ? 
-        this.setState({driverErrorText: "This field is required."}) : 
-        this.setState({driverErrorText: ""});
+        this.state.firstName === "" ? 
+        this.setState({firstNameError: "First name is required."}) : 
+        this.setState({firstNameError: ""});
 
-        !this.state.driverAge ? 
-        this.setState({ageErrorText: "This field is required."}) : 
-        this.setState({ageErrorText: ""});
+        this.state.lastName === "" ? 
+        this.setState({lastNameError: "Last name is required."}) : 
+        this.setState({lastNameError: ""});
 
         this.state.email === "" ? 
-        this.setState({emailErrorText: "This field is required."}) : 
+        this.setState({emailErrorText: "Please enter e-mail address."}) : 
         this.setState({emailErrorText: ""});
+
+        if (
+            this.state.firstName &&
+            this.state.lastName &&
+            this.state.email
+        ) {
+            sendDraft(draft);
+        }
     }
 
     render() {
-        const draft = require('../utils/draft.json');
+        const radioStyle = {width: "35%"};
         return(
             <section className="infosForm">
+                <RadioButtonGroup 
+                    name="title" 
+                    defaultSelected="Mr" 
+                    className="title-radios" 
+                    onChange={(e, value) => this.setState({title: value})}>
+                    <RadioButton
+                        value="Mr"
+                        label="Mr"
+                        style={radioStyle}
+                    />
+                    <RadioButton
+                        value="Mrs"
+                        label="Mrs"
+                        style={radioStyle}
+                    />
+                </RadioButtonGroup>
                 <TextField 
-                    hintText="Driver name" 
-                    errorText={this.state.driverErrorText}
+                    hintText="First name" 
+                    errorText={this.state.firstNameError}
                     className="infos-field" 
-                    onChange={(e, value) => this.setState({driverName: value})} 
+                    onChange={(e, value) => this.setState({firstName: value})} 
                 />
                 <TextField 
-                    hintText="Age"
-                    defaultValue={this.state.driverAge}
-                    errorText={this.state.ageErrorText}
+                    hintText="Last name" 
+                    errorText={this.state.lastNameError}
                     className="infos-field" 
-                    onChange={(e, value) => this.setState({driverAge: value})}
+                    onChange={(e, value) => this.setState({lastName: value})} 
+                />
+                <DatePicker 
+                    hintText="Date of birth" 
+                    mode="landscape"
+                    defaultDate={new Date(this.state.birthDate)}
+                    onChange={(e, date) => this.setState({birthDate: `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`})}
                 />
                 <SelectField
                     floatingLabelText="Car Model"

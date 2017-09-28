@@ -17,11 +17,23 @@ body {
   width: 256px;
   margin-top: 20px;
 }
+.submit {
+  margin-top: 15px;
+}
 .infosForm {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
+.title-radios {
+  width: 256px;
+  display: flex;
+}
 .error-text {
   color: #A70000;
+}
+.spinner {
+  position: absolute;
+  top: 10%;
+  z-index: 2;
 }

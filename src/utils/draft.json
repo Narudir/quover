@@ -1,82 +1,88 @@
 {
-    "partner": {
-        "productAgreementLabel": "xxxxfdgfdgfdg"
-    },
-    "language": "nl",
-    "partnerReference": [
+    "language":"nl",
+    "partnerReference":[
         {
-            "key": "salexId",
-            "value": "12345678"
+            "key":"salesId",
+            "value":"12345678"
+        },
+        {
+            "key":"productId",
+            "value":"235689"
         }
     ],
-    "risk": {
-        "vehicle": {
-            "identification": {
-                "code": "123470",
-                "codeType": "NAT",
-                "country": "BE",
-                "vehicleType": "10"
-            },
-            "firstRegistrationYear": "2017",
-            "invoice": {
-                "purchasedPriceWithVat": {
-                    "value": 4500000,
-                    "currency": "EUR"
-                },
-                "isPurchasedInLast6Month": true
-            }
+    "policyholder":{
+        "address":{
+            "city":"Bruxelles",
+            "country":"BE",
+            "number":"44",
+            "street":"Rue des palais",
+            "zip":"1000"
         },
-        "drivers": [
-            {
-                "person": {
-                    "title": "Mr.",
-                    "firstName": "John",
-                    "lastName": "Doe",
-                    "birthDate": "1974-10-10"
-                },
-                "contact": {
-                    "phone": "+32477007007",
-                    "email": "john.doe@qover.me"
-                },
-                "numberOfClaimsLast5Years": "0"
-            }
-        ]
-    },
-    "terms": {
-        "startDate": "2017-12-12",
-        "requestPaperCopy": false
-    },
-    "policyholder": {
-        "person": {
-            "title": "Mr.",
-            "firstName": "John",
-            "lastName": "Doe",
-            "birthDate": "1974-10-10"
+        "billingAddress":{
+            "city":"Bruxelles",
+            "country":"BE",
+            "number":"45",
+            "street":"Rue des palais",
+            "zip":"1000"
         },
-        "company": {
-            "name": "Qover SA",
-            "vat": "BE0870123456",
-            "title": "Mr.",
-            "firstName": "John",
-            "lastName": "Doe"
+        "person":{
+            "birthDate":"1984-12-16",
+            "firstName":"John",
+            "lastName":"Doe",
+            "title":"Mr"
         },
-        "contact": {
-            "phone": "+32477007007",
-            "email": "john.doe@qover.me"
-        },
-        "address": {
-            "number": "44",
-            "street": "Rue des palais",
-            "zip": "1000",
-            "city": "Bruxelles",
-            "country": "BE"
-        },
-        "billingAddress": {
-            "number": "44",
-            "street": "Rue des palais",
-            "zip": "1000",
-            "city": "Bruxelles",
-            "country": "BE"
+        "contact":{
+            "email":"admin@example.com",
+            "phone":"+3226592323"
         }
+    },
+    "risk":{
+        "drivers":[
+            {
+                "contact":{
+                    "email":"john.doe@example.com",
+                    "phone":"+32478595959"
+                },
+                "numberOfClaimsLast5Years":"0",
+                "person":{
+                    "birthDate":"1984-12-16",
+                    "firstName":"John",
+                    "lastName":"Doe",
+                    "title":"Mr"
+                }
+            }
+        ],
+        "vehicle":{
+            "cascoInsurerCompany":"AXA Belgium",
+            "details":{
+                "code":"123470",
+                "codeType":"NAT",
+                "country":"BE",
+                "vehicleType":"10"
+            },
+            "firstRegistrationYear":"2017",
+            "identification":{
+                "registration":{
+                    "country":"BE",
+                    "plate":"1-ABC-123"
+                }
+            },
+            "invoice":{
+                "isPurchasedInLast6Months":true,
+                "purchasedPriceIncludingVat":{
+                    "currency":"EUR",
+                    "value":1500000
+                }
+            }
+        }
+    },
+    "terms":{
+        "claimLimit":{
+            "currency":"EUR",
+            "value":1600000
+        },
+        "requestPaperCopy":false,
+        "startDate":"2017-12-17",
+        "variant":"GAP60"
     }
 }

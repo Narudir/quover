@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
+import Spinner from 'react-spinner-material';
 import { login, logout } from '../utils/qover-api';
 
 class LogPanel extends Component {
@@ -11,7 +12,8 @@ class LogPanel extends Component {
           passwordValue: "",
           emailErrorText: "",
           passwordErrorText: "",
-          incorrectCredentials: false
+          incorrectCredentials: false,
+          isLoading: false
         };
     }
     
@@ -25,6 +27,7 @@ class LogPanel extends Component {
         this.setState({passwordErrorText: ""});
 
         if (this.state.emailValue && this.state.passwordValue) {
+            this.setState({isLoading: true});
             login(this.state.emailValue, this.state.passwordValue)
             .then((token) => {
                 if (token) {
@@ -33,6 +36,7 @@ class LogPanel extends Component {
                 } else {
                     this.setState({incorrectCredentials: true});
                 }
+                this.setState({isLoading: false});
             });
         }
     }
@@ -47,12 +51,20 @@ class LogPanel extends Component {
         if (this.props.token) {
             return (
                 <div className="log-panel">
+                    <Spinner
+                        spinnerColor={"#00BCD4"}
+                        visible={this.state.isLoading} 
+                    />
                     <RaisedButton label="Logout" className="logout-btn" secondary={true} onClick={() => this.logOut()} />
                 </div>
             )
         } else {
             return (
                 <div className="log-panel">
+                    <Spinner
+                        spinnerColor={"#00BCD4"}
+                        visible={this.state.isLoading} 
+                    />
                     <div className="login-form">
                         <TextField 
                             hintText="E-mail" 
