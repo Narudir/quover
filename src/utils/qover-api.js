@@ -31,12 +31,19 @@ function logout(token) {
 }
 
 function sendDraft(draft) {
-    console.log(config);
     const url = `${BASE_URL}/be/motor/gap/drafts?apikey=${API_KEY}`;
     return axios
     .post(url, draft, config)
-    .then(
-        (response) => console.log(response.data.draftId))
+    .then((response) => response.data.draftId)
+    .then((draftId) => getPricePlans(draftId))
+    .catch((e) => console.log(e));
+}
+
+function getPricePlans(draftId) {
+    const url = `${BASE_URL}/be/motor/gap/drafts/${draftId}/price-requests?apikey=${API_KEY}`;
+    return axios
+    .post(url, {}, config)
+    .then((response) => response.data.prices)
     .catch((e) => console.log(e));
 }
 

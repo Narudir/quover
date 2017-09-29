@@ -5,8 +5,9 @@ import MenuItem from 'material-ui/MenuItem';
 import DatePicker from 'material-ui/DatePicker';
 import RaisedButton from 'material-ui/RaisedButton';
 import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
+import Spinner from 'react-spinner-material';
 import {sendDraft} from '../utils/qover-api';
-const draft =  require('../utils/draft.json')
+const draft =  require('../utils/draft.json');
 
 class InfosForm extends Component {
     constructor(props) {
@@ -22,6 +23,25 @@ class InfosForm extends Component {
             lastNameError: "",
             ageErrorText: "",
             emailErrorText: "",
+            isLoading: false
+        }
+    }
+
+    submitInfosForm() {
+        this.validate();
+        if (
+            this.state.firstName &&
+            this.state.lastName &&
+            this.state.email
+        ) {
+            const newDraft = this.createNewDraft();
+            this.setState({isLoading: true});
+            sendDraft(newDraft)
+            .then((plans) => {
+                this.props.setPricePlans(plans);
+                this.setState({isLoading: false});
+            })
+            .catch((error) => console.log(error));
         }
     }
 
@@ -37,20 +57,56 @@ class InfosForm extends Component {
         this.state.email === "" ? 
         this.setState({emailErrorText: "Please enter e-mail address."}) : 
         this.setState({emailErrorText: ""});
+    }
 
-        if (
-            this.state.firstName &&
-            this.state.lastName &&
-            this.state.email
-        ) {
-            sendDraft(draft);
-        }
+    createNewDraft() {
+        const driverInfo = {
+            policyholder: {
+                person: {
+                    birthDate: this.state.birthDate,
+                    firstName: this.state.firstName,
+                    lastName: this.state.lastName,
+                    title: this.state.title
+                },
+                contact: {
+                    email: this.state.email
+                }
+            },
+            risk: {
+                drivers: [
+                    {   
+                        contact: {
+                            email: this.state.email
+                        },
+                        person: {
+                            birthDate: this.state.birthDate,
+                            firstName: this.state.firstName,
+                            lastName: this.state.lastName,
+                            title: this.state.title
+                        }
+                    }
+                ],
+                vehicle: {
+                    details: {
+                        code: this.state.carModel,
+                        codeType: "NAT",
+                        country: "BE",
+                        vehicleType: "10"
+                    }
+                }
+            }
+        };
+        return {...driverInfo, ...draft}
     }
 
     render() {
         const radioStyle = {width: "35%"};
         return(
             <section className="infosForm">
+                <Spinner
+                    spinnerColor={"#00BCD4"}
+                    visible={this.state.isLoading} 
+                />
                 <RadioButtonGroup 
                     name="title" 
                     defaultSelected="Mr" 
@@ -100,7 +156,7 @@ class InfosForm extends Component {
                     className="infos-field"
                     onChange={(e, value) => this.setState({email: value})}
                 />
-                <RaisedButton label="Submit" className="submit" primary={true} onClick={() => this.validate()} />
+                <RaisedButton label="Submit" className="submit" primary={true} onClick={() => this.submitInfosForm()} />
             </section>
         )
     }
