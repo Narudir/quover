@@ -32,7 +32,7 @@ class InfosForm extends Component {
         if (
             this.state.firstName &&
             this.state.lastName &&
-            this.state.email
+            this.validateEmail(this.state.email)
         ) {
             const newDraft = this.createNewDraft();
             this.setState({isLoading: true});
@@ -45,6 +45,11 @@ class InfosForm extends Component {
         }
     }
 
+    validateEmail(email) {
+        const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return re.test(email);
+    }
+
     validate() {
         this.state.firstName === "" ? 
         this.setState({firstNameError: "First name is required."}) : 
@@ -54,49 +59,46 @@ class InfosForm extends Component {
         this.setState({lastNameError: "Last name is required."}) : 
         this.setState({lastNameError: ""});
 
-        this.state.email === "" ? 
-        this.setState({emailErrorText: "Please enter e-mail address."}) : 
-        this.setState({emailErrorText: ""});
+        if (this.state.email === "") {
+            this.setState({emailErrorText: "Please enter e-mail address."});
+        } else {
+            this.validateEmail(this.state.email) ? 
+            this.setState({emailErrorText: ""}) :
+            this.setState({emailErrorText: "Enter valid e-mail address  ."});
+        }
     }
 
     createNewDraft() {
-        const driverInfo = {
-            policyholder: {
+        const driverInfo = draft;
+        driverInfo.policyholder.person = {
+            birthDate: this.state.birthDate,
+            firstName: this.state.firstName,
+            lastName: this.state.lastName,
+            title: this.state.title
+        };
+        driverInfo.policyholder.contact.email = this.state.email;
+        driverInfo.risk.drivers = [
+            {   
+                contact: {
+                    email: this.state.email,
+                    phone: "+32478595959"
+                },
+                numberOfClaimsLast5Years: "0",
                 person: {
                     birthDate: this.state.birthDate,
                     firstName: this.state.firstName,
                     lastName: this.state.lastName,
                     title: this.state.title
-                },
-                contact: {
-                    email: this.state.email
-                }
-            },
-            risk: {
-                drivers: [
-                    {   
-                        contact: {
-                            email: this.state.email
-                        },
-                        person: {
-                            birthDate: this.state.birthDate,
-                            firstName: this.state.firstName,
-                            lastName: this.state.lastName,
-                            title: this.state.title
-                        }
-                    }
-                ],
-                vehicle: {
-                    details: {
-                        code: this.state.carModel,
-                        codeType: "NAT",
-                        country: "BE",
-                        vehicleType: "10"
-                    }
                 }
             }
+        ];
+        driverInfo.risk.vehicle.details = {
+            code: this.state.carModel,
+            codeType: "NAT",
+            country: "BE",
+            vehicleType: "10"
         };
-        return {...driverInfo, ...draft}
+        return driverInfo;
     }
 
     render() {

@@ -8,12 +8,12 @@ class LogPanel extends Component {
     constructor(props) {
         super(props);
         this.state = {
-          emailValue: "",
-          passwordValue: "",
-          emailErrorText: "",
-          passwordErrorText: "",
-          incorrectCredentials: false,
-          isLoading: false
+            emailValue: "",
+            passwordValue: "",
+            emailErrorText: "",
+            passwordErrorText: "",
+            incorrectCredentials: false,
+            isLoading: false
         };
     }
     
@@ -42,7 +42,9 @@ class LogPanel extends Component {
     }
 
     logOut() {
-       logout(this.props.token).then(this.props.setToken(null));
+        logout(this.props.token).then(
+            this.props.refreshState()
+        );
     }
 
     render() {
